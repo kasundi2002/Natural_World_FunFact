@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Fun Facts Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #83a4d4, #b6fbff);
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        #fact-display {
+            font-size: 1.2rem;
+            margin: 1.5rem 0;
+            min-height: 100px;
+            padding: 1rem;
+            border: 2px dashed #83a4d4;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .share-buttons {
+            margin-top: 1rem;
+        }
+
+        .share-buttons button {
+            margin: 0 5px;
+            background-color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Random Fun Facts!</h1>
+        <div id="fact-display">Click the button to get a random fun fact!</div>
+        <button onclick="getRandomFact()">Get New Fact</button>
+        <div class="share-buttons">
+            <button onclick="shareFact()">Share</button>
+        </div>
+    </div>
+
+    <script>
+        const funFacts = [
+            "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old!",
+            "A day on Venus is longer than its year. It takes Venus 243 Earth days to rotate on its axis but only 225 Earth days to orbit the Sun.",
+            "The shortest war in history was between Britain and Zanzibar on August 27, 1896. Zanzibar surrendered after just 38 minutes.",
+            "Bananas are berries, but strawberries aren't!",
+            "A group of flamingos is called a 'flamboyance'.",
+            "The first oranges weren't orange! The original oranges were actually green.",
+            "Cows have best friends and get stressed when separated from them.",
+            "The average person spends 6 months of their lifetime waiting for red lights to turn green.",
+            "A butterfly's taste sensors are in its feet!",
+            "The Great Wall of China isn't visible from space with the naked eye, contrary to popular belief."
+        ];
+
+        function getRandomFact() {
+            const factDisplay = document.getElementById('fact-display');
+            const randomIndex = Math.floor(Math.random() * funFacts.length);
+            factDisplay.textContent = funFacts[randomIndex];
+        }
+
+        function shareFact() {
+            const fact = document.getElementById('fact-display').textContent;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Fun Fact!',
+                    text: fact,
+                    url: window.location.href
+                })
+                .catch(console.error);
+            } else {
+                navigator.clipboard.writeText(fact)
+                    .then(() => alert('Fact copied to clipboard!'))
+                    .catch(err => alert('Failed to copy fact'));
+            }
+        }
+    </script>
+</body>
+</html>
